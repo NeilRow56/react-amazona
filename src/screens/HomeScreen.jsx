@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './Header';
+import Header from '../components/Header';
 import data from '../utils/data';
 import { Link } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ const Home = () => {
 							]"
 							key={product.slug}
 						>
-							<Link to={`/proroduct/${product.slug}`}>
+							<Link to={`/product/${product.slug}`}>
 								<img
 									className="w-full max-w-[400px]"
 									src={product.image}

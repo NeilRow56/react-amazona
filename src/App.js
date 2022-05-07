@@ -1,15 +1,17 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
+import HomeScreen from './screens/HomeScreen';
 
-import About from './components/About';
+import AboutScreen from './screens/AboutScreen';
+import ProductScreen from './screens/ProductScreen';
 
 function App() {
 	return (
 		<div className="">
 			{/* Home */}
 			<Routes>
-				<Route path="/about" element={<About />} />
-				<Route path="/" element={<Home />} />
+				<Route path="/product/:slug" element={<ProductScreen />} />
+				<Route path="/about" element={<AboutScreen />} />
+				<Route path="/" element={<HomeScreen />} />
 			</Routes>
 		</div>
 	);
