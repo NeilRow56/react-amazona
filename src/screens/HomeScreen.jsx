@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import axios from 'axios';
 import logger from 'use-reducer-logger';
 import Product from '../components/Product';
+import { Helmet } from 'react-helmet-async';
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -50,6 +51,9 @@ const HomeScreen = () => {
 		<>
 			<Header />
 			<div className="w-full max-w-[1500px] mx-auto ">
+				<Helmet>
+					<title>Amazona</title>
+				</Helmet>
 				<h1 className="text-3xl pt-[80px] pb-5">Featured Products</h1>
 				<div className=" ">
 					{loading ? (
