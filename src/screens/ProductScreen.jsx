@@ -57,7 +57,7 @@ const ProductScreen = () => {
 					<div className="col-span-6 bg-red-100 mx-auto">
 						<img src={product.image} alt={product.name} />
 					</div>
-					<div className="col-span-3 ">
+					<div className="col-span-6 md:col-span-3 ">
 						<ul>
 							<li className="border-b border-gray-100 pb-2">
 								<Helmet>
@@ -80,7 +80,7 @@ const ProductScreen = () => {
 							</li>
 						</ul>
 					</div>
-					<div className="col-span-3 ">
+					<div className="col-span-6 md:col-span-3 ">
 						<div className="max-w-[300px] px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
 							<ul>
 								<li className="flex border-b border-gray-100 pb-2">
