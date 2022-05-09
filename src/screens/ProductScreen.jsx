@@ -1,10 +1,11 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import Header from '../components/Header';
 import { useParams } from 'react-router-dom';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import Rating from '../components/Rating';
 import { Helmet } from 'react-helmet-async';
+import { Store } from '../Store';
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -28,6 +29,14 @@ const ProductScreen = () => {
 		loading: true,
 		error: '',
 	});
+
+	const { state, dispatch: ctxDispatch } = useContext(Store);
+	const addToCartHandler = () => {
+		ctxDispatch({
+			type: 'CART_ADD_ITEM',
+			payload: { ...product, quantity: 1 },
+		});
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -85,7 +94,7 @@ const ProductScreen = () => {
 							<ul>
 								<li className="flex border-b border-gray-100 pb-2">
 									<div className="mr-2 w-[75px]">Price:</div>
-									<div> ${product.price} </div>
+									<div> £{product.price} </div>
 								</li>
 								<li className="flex items-center mt-2">
 									<div className="mr-2 w-[75px]">Status:</div>
@@ -102,7 +111,10 @@ const ProductScreen = () => {
 								</li>
 								{product.countInStock > 0 && (
 									<div>
-										<button className="bg-[#f0c14b] rounded-md my-3 w-full mx-auto p-1 border border-[#a88734]">
+										<button
+											onClick={addToCartHandler}
+											className="bg-[#f0c14b] rounded-md my-3 w-full mx-auto p-1 border border-[#a88734]"
+										>
 											Add to Cart
 										</button>
 									</div>

@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { BsPerson } from 'react-icons/bs';
-import { BiSearch } from 'react-icons/bi';
+import React, { useState, useContext } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { HiOutlineMenuAlt4 } from 'react-icons/hi';
 import {
@@ -11,6 +9,7 @@ import {
 	FaYoutube,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { Store } from '../Store';
 
 function Navbar() {
 	const [nav, setNav] = useState(false);
@@ -19,6 +18,10 @@ function Navbar() {
 		setNav(!nav);
 		setLogo(!logo);
 	};
+
+	const { state } = useContext(Store);
+	const { cart } = state;
+
 	return (
 		<div className="flex w-full justify-between items-center h-12 px-4 md:px-[100px]  absolute z-10 text-white bg-[#404040]">
 			<Link to="/">
@@ -37,10 +40,18 @@ function Navbar() {
 
 				<li>Travel</li>
 			</ul>
-			<div className="hidden md:flex">
-				<BiSearch className="mr-2" size={20} />
-				<BsPerson size={20} />
-			</div>
+			<Link to="/cart">
+				<div className="flex items-center">
+					<h4>Cart</h4>
+					{cart.cartItems.length > 0 && (
+						<div className="bg-red-600 rounded-full  w-8 h-8  ml-3 px-2 text-[#ffff]     ">
+							<div className="text-center pt-1">
+								{cart.cartItems.length}
+							</div>
+						</div>
+					)}
+				</div>
+			</Link>
 			{/* Hamburger  */}
 			<div onClick={handleNav} className="md:hidden z-10 ">
 				{nav ? (
