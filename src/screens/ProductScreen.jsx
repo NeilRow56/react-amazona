@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import Header from '../components/Header';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import Rating from '../components/Rating';
@@ -21,6 +21,7 @@ const reducer = (state, action) => {
 };
 
 const ProductScreen = () => {
+	const navigate = useNavigate();
 	const params = useParams();
 	const { slug } = params;
 
@@ -59,6 +60,8 @@ const ProductScreen = () => {
 			type: 'CART_ADD_ITEM',
 			payload: { ...product, quantity },
 		});
+
+		navigate('/cart');
 	};
 
 	return loading ? (

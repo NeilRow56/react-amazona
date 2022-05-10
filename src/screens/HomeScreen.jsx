@@ -6,6 +6,7 @@ import axios from 'axios';
 import logger from 'use-reducer-logger';
 import Product from '../components/Product';
 import { Helmet } from 'react-helmet-async';
+import Footer from '../components/Footer';
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -71,6 +72,7 @@ const HomeScreen = () => {
 					)}
 				</div>
 			</div>
+			<Footer />
 		</>
 	);
 };
