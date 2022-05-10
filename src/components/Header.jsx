@@ -12,15 +12,15 @@ import { Link } from 'react-router-dom';
 import { Store } from '../Store';
 
 function Navbar() {
+	const { state } = useContext(Store);
+	const { cart } = state;
+	console.log(state);
 	const [nav, setNav] = useState(false);
 	const [logo, setLogo] = useState(false);
 	const handleNav = () => {
 		setNav(!nav);
 		setLogo(!logo);
 	};
-
-	const { state } = useContext(Store);
-	const { cart } = state;
 
 	return (
 		<div className="flex w-full justify-between items-center h-12 px-4 md:px-[100px]  absolute z-10 text-white bg-[#404040]">
@@ -46,7 +46,10 @@ function Navbar() {
 					{cart.cartItems.length > 0 && (
 						<div className="bg-red-600 rounded-full  w-8 h-8  ml-3 px-2 text-[#ffff]     ">
 							<div className="text-center pt-1">
-								{cart.cartItems.length}
+								{cart.cartItems.reduce(
+									(a, c) => a + c.quantity,
+									0
+								)}
 							</div>
 						</div>
 					)}
