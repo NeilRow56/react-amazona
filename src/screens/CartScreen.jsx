@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Store } from '../Store';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 
 const CartScreen = () => {
+	const navigate = useNavigate();
 	const { state, dispatch: ctxDispatch } = useContext(Store);
 	const {
 		cart: { cartItems },
@@ -29,6 +30,10 @@ const CartScreen = () => {
 
 	const removeItemHandler = (item) => {
 		ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+	};
+
+	const checkoutHandler = () => {
+		navigate('/signin?redirect=/shipping');
 	};
 
 	return (
@@ -150,6 +155,7 @@ const CartScreen = () => {
 								)}
 							</h2>
 							<button
+								onClick={checkoutHandler}
 								disabled={cartItems.length === 0}
 								className="bg-[#f0c14b] rounded-md mt-4 w-full  p-1  border border-[#a88734]  mx-auto "
 							>
