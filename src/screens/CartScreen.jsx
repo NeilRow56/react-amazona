@@ -6,12 +6,30 @@ import Header from '../components/Header';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
 import { Helmet } from 'react-helmet-async';
+import axios from 'axios';
 
 const CartScreen = () => {
 	const { state, dispatch: ctxDispatch } = useContext(Store);
 	const {
 		cart: { cartItems },
 	} = state;
+
+	const updateCartHandler = async (item, quantity) => {
+		const { data } = await axios.get(`/api/products/${item._id}`);
+		if (data.countInStock < quantity) {
+			window.alert('Sorry. Product is out of stock');
+			return;
+		}
+
+		ctxDispatch({
+			type: 'CART_ADD_ITEM',
+			payload: { ...item, quantity },
+		});
+	};
+
+	const removeItemHandler = (item) => {
+		ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+	};
 
 	return (
 		<>
@@ -70,6 +88,12 @@ const CartScreen = () => {
 											<button
 												className="mx-auto  w-3 md:w-6  text-2xl "
 												disabled={item.quantity === 1}
+												onClick={() =>
+													updateCartHandler(
+														item,
+														item.quantity - 1
+													)
+												}
 											>
 												-
 											</button>
@@ -83,6 +107,12 @@ const CartScreen = () => {
 													item.quantity ===
 													item.countInStock
 												}
+												onClick={() =>
+													updateCartHandler(
+														item,
+														item.quantity + 1
+													)
+												}
 											>
 												+
 											</button>
@@ -93,7 +123,10 @@ const CartScreen = () => {
 									<h4>£{item.price}</h4>
 								</div>
 								<div className="flex flex-col items-center justify-center ">
-									<RiDeleteBin6Fill className="text-red-600 w-8 h-8" />
+									<RiDeleteBin6Fill
+										onClick={() => removeItemHandler(item)}
+										className="text-red-600 w-8 h-8 cursor-pointer"
+									/>
 								</div>
 							</div>
 						))}
