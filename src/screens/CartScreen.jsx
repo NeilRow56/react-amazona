@@ -40,6 +40,12 @@ const CartScreen = () => {
 			) : (
 				<div className="flex flex-col lg:flex lg:flex-row  w-full max-w-[1300px]  mx-auto">
 					<div className="flex flex-col w-[350px] sm:w-[400px] md:w-[600px] lg:w-[700px] xl:w-[900px] mx-auto mb-4 ">
+						<Link to="/">
+							<div className="my-3 flex items-center">
+								<HiOutlineArrowNarrowLeft />
+								<h6 className="ml-3">Continue Shopping</h6>
+							</div>
+						</Link>
 						{cartItems.map((item) => (
 							<div
 								key={item._id}
@@ -47,7 +53,7 @@ const CartScreen = () => {
 							>
 								<div className=" w-[60px] h-[72px] md:w-[80px] md:h-[100px] relative border border-gray-100 rounded m-1">
 									<img
-										alt={item.className}
+										alt={item.name}
 										src={item.image}
 										layout="fill"
 										className="cursor-pointer rounded-md"
@@ -94,11 +100,26 @@ const CartScreen = () => {
 					</div>
 					<div className=" w-[300px] lg:w-1/4 flex flex-col  mt-10  md:mt-0  mx-auto">
 						<div className="border border-gray-200 pb-5 rounded p-4">
-							<h2 className="font-bold  ">Subtotal (5 items):</h2>
-							<h2 className="font-bold border-b border-gray-200 ">
-								£125.00
+							<h2 className="font-bold  ">
+								Subtotal (
+								{cartItems.reduce(
+									(amount, item) => amount + item.quantity,
+									0
+								)}{' '}
+								items) :
 							</h2>
-							<button className="bg-[#f0c14b] rounded-md mt-4 w-full  p-1  border border-[#a88734]  mx-auto ">
+							<h2 className="font-bold border-b border-gray-200 ">
+								£{' '}
+								{cartItems.reduce(
+									(amount, item) =>
+										amount + item.price * item.quantity,
+									0
+								)}
+							</h2>
+							<button
+								disabled={cartItems.length === 0}
+								className="bg-[#f0c14b] rounded-md mt-4 w-full  p-1  border border-[#a88734]  mx-auto "
+							>
 								Proceed to Checkout
 							</button>
 						</div>
