@@ -14,7 +14,7 @@ import { Store } from '../Store';
 function Navbar() {
 	const { state } = useContext(Store);
 	const { cart } = state;
-	console.log(state);
+
 	const [nav, setNav] = useState(false);
 	const [logo, setLogo] = useState(false);
 	const handleNav = () => {
