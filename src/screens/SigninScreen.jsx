@@ -1,11 +1,46 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Axios from 'axios';
+import { Store } from '../Store';
+import { toast } from 'react-toastify';
+import { getError } from '../utils/utilsError';
 
 const SigninScreen = () => {
+	const navigate = useNavigate();
 	const { search } = useLocation();
 	const redirectInUrl = new URLSearchParams(search).get('redirect');
 	const redirect = redirectInUrl ? redirectInUrl : '/';
+
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const { state, dispatch: ctxDispatch } = useContext(Store);
+
+	const { userInfo } = state;
+
+	const submitHandler = async (e) => {
+		e.preventDefault();
+
+		try {
+			const { data } = await Axios.post('/api/users/signin', {
+				email,
+				password,
+			});
+			ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+			localStorage.setItem('userInfo', JSON.stringify(data));
+			navigate(redirect || '/');
+		} catch (err) {
+			toast.error(getError(err));
+		}
+	};
+
+	useEffect(() => {
+		if (userInfo) {
+			navigate(redirect);
+		}
+	}, [navigate, redirect, userInfo]);
+
 	return (
 		<>
 			<div className=" flex flex-col w-full max-w-[600px] h-screen mx-auto items-center justify-center  ">
@@ -14,20 +49,22 @@ const SigninScreen = () => {
 				</Helmet>
 				<div className=" flex flex-col w-full">
 					<h1 className="mb-3 font-bold">Sign In</h1>
-					<form>
+					<form onSubmit={submitHandler}>
 						<label htmlFor="">Email</label>
 						<input
-							className="mb-3 h-10 border border-gray-200 w-full rounded"
+							className="mb-3 pl-3 h-10 border border-gray-200 w-full rounded"
 							type="email"
 							id="email"
 							required
+							onChange={(e) => setEmail(e.target.value)}
 						/>
 						<label htmlFor="">Password</label>
 						<input
-							className="mb-3 h-10 border border-gray-200 w-full rounded"
+							className="mb-3 pl-3 h-10 border border-gray-200 w-full rounded"
 							type="password"
 							id="password"
 							required
+							onChange={(e) => setPassword(e.target.value)}
 						/>
 						<button
 							type="submit"

@@ -10,10 +10,11 @@ import {
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Store } from '../Store';
+import Dropdown from './Dropdown';
 
 function Navbar() {
 	const { state } = useContext(Store);
-	const { cart } = state;
+	const { cart, userInfo } = state;
 
 	const [nav, setNav] = useState(false);
 	const [logo, setLogo] = useState(false);
@@ -43,6 +44,7 @@ function Navbar() {
 			<Link to="/cart">
 				<div className="flex items-center">
 					<h4>Cart</h4>
+
 					{cart.cartItems.length > 0 && (
 						<div className="bg-red-600 rounded-full  w-8 h-8  ml-3 px-2 text-[#ffff]     ">
 							<div className="text-center pt-1">
@@ -55,6 +57,14 @@ function Navbar() {
 					)}
 				</div>
 			</Link>
+			{userInfo ? (
+				<Dropdown />
+			) : (
+				<Link className="nav-link" to="/signin">
+					Sign In
+				</Link>
+			)}
+
 			{/* Hamburger  */}
 			<div onClick={handleNav} className="md:hidden z-10 ">
 				{nav ? (
