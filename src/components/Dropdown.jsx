@@ -12,6 +12,7 @@ const Dropdown = () => {
 		ctxDispatch({ type: 'USER_SIGNOUT' });
 		localStorage.removeItem('userInfo');
 		localStorage.removeItem('shippingAddress');
+		localStorage.removeItem('paymentMethod');
 	};
 
 	const [isActive, setIsActive] = useState(false);

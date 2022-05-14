@@ -14,7 +14,7 @@ export default function CheckoutProgress(props) {
 				<div className={` w-1/4 ${props.step2 ? 'active' : ''}`}>
 					Shipping
 				</div>
-				<div className={` w-1/4 ${props.step4 ? 'active' : ''}`}>
+				<div className={` w-1/4 ${props.step3 ? 'active' : ''}`}>
 					Payment
 				</div>
 				<div
