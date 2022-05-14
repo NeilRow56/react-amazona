@@ -11,6 +11,7 @@ const Dropdown = () => {
 	const signoutHandler = () => {
 		ctxDispatch({ type: 'USER_SIGNOUT' });
 		localStorage.removeItem('userInfo');
+		localStorage.removeItem('shippingAddress');
 	};
 
 	const [isActive, setIsActive] = useState(false);

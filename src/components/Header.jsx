@@ -24,47 +24,48 @@ function Navbar() {
 	};
 
 	return (
-		<div className="flex w-full justify-between items-center h-12 px-4 md:px-[100px]  absolute z-10 text-white bg-[#404040]">
+		<div className="flex w-full justify-between  items-center h-12 px-4 md:px-[250px]  absolute z-10 text-white bg-[#404040]">
 			<Link to="/">
 				<li className="list-none font-bold">Amazona</li>
 			</Link>
-			<ul
-				className="hidden md:flex space-x-3
+			<div className="flex items-center space-x-3">
+				<ul
+					className="hidden  md:flex space-x-3
             "
-			>
-				<Link to="/">
-					<li>Home</li>
-				</Link>
-				<Link to="/about">
-					<li>About</li>
-				</Link>
+				>
+					<Link to="/">
+						<li>Home</li>
+					</Link>
+					<Link to="/about">
+						<li>About</li>
+					</Link>
 
-				<li>Travel</li>
-			</ul>
-			<Link to="/cart">
-				<div className="flex items-center">
-					<h4>Cart</h4>
+					<li>Travel</li>
+				</ul>
+				<Link to="/cart">
+					<div className="flex items-center">
+						<h4>Cart</h4>
 
-					{cart.cartItems.length > 0 && (
-						<div className="bg-red-600 rounded-full  w-8 h-8  ml-3 px-2 text-[#ffff]     ">
-							<div className="text-center pt-1">
-								{cart.cartItems.reduce(
-									(a, c) => a + c.quantity,
-									0
-								)}
+						{cart.cartItems.length > 0 && (
+							<div className="bg-red-600 rounded-full  w-8 h-8  ml-3 px-2 text-[#ffff]     ">
+								<div className="text-center pt-1">
+									{cart.cartItems.reduce(
+										(a, c) => a + c.quantity,
+										0
+									)}
+								</div>
 							</div>
-						</div>
-					)}
-				</div>
-			</Link>
-			{userInfo ? (
-				<Dropdown />
-			) : (
-				<Link className="nav-link" to="/signin">
-					Sign In
+						)}
+					</div>
 				</Link>
-			)}
-
+				{userInfo ? (
+					<Dropdown />
+				) : (
+					<Link className="nav-link" to="/signin">
+						Sign In
+					</Link>
+				)}
+			</div>
 			{/* Hamburger  */}
 			<div onClick={handleNav} className="md:hidden z-10 ">
 				{nav ? (

@@ -50,7 +50,7 @@ const SigninScreen = () => {
 				<div className=" flex flex-col w-full">
 					<h1 className="mb-3 font-bold">Sign In</h1>
 					<form onSubmit={submitHandler}>
-						<label htmlFor="">Email</label>
+						<label>Email</label>
 						<input
 							className="mb-3 pl-3 h-10 border border-gray-200 w-full rounded"
 							type="email"
@@ -58,7 +58,7 @@ const SigninScreen = () => {
 							required
 							onChange={(e) => setEmail(e.target.value)}
 						/>
-						<label htmlFor="">Password</label>
+						<label>Password</label>
 						<input
 							className="mb-3 pl-3 h-10 border border-gray-200 w-full rounded"
 							type="password"
