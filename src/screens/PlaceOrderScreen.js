@@ -1,13 +1,34 @@
 import React from 'react';
-import { useContext, useEffect } from 'react';
+import Axios from 'axios';
+import { useContext, useEffect, useReducer } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import { toast } from 'react-toastify';
+import { getError } from '../utils/utilsError';
 import { Store } from '../Store';
 import CheckoutProgress from '../components/CheckoutProgress';
 
+const reducer = (state, action) => {
+	switch (action.type) {
+		case 'CREATE_REQUEST':
+			return { ...state, loading: true };
+		case 'CREATE_SUCCESS':
+			return { ...state, loading: false };
+		case 'CREATE_FAIL':
+			return { ...state, loading: false };
+		default:
+			return state;
+	}
+};
+
 export default function PlaceOrderScreen() {
 	const navigate = useNavigate();
+
+	const [{ loading }, dispatch] = useReducer(reducer, {
+		loading: false,
+	});
+
 	const { state, dispatch: ctxDispatch } = useContext(Store);
 	const { cart, userInfo } = state;
 
@@ -19,7 +40,36 @@ export default function PlaceOrderScreen() {
 	cart.taxPrice = round2(0.2 * cart.itemsPrice);
 	cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
-	const placeOrderHandler = async () => {};
+	const placeOrderHandler = async () => {
+		try {
+			dispatch({ type: 'CREATE_REQUEST' });
+
+			const { data } = await Axios.post(
+				'/api/orders',
+				{
+					orderItems: cart.cartItems,
+					shippingAddress: cart.shippingAddress,
+					paymentMethod: cart.paymentMethod,
+					itemsPrice: cart.itemsPrice,
+					shippingPrice: cart.shippingPrice,
+					taxPrice: cart.taxPrice,
+					totalPrice: cart.totalPrice,
+				},
+				{
+					headers: {
+						authorization: `Bearer ${userInfo.token}`,
+					},
+				}
+			);
+			ctxDispatch({ type: 'CART_CLEAR' });
+			dispatch({ type: 'CREATE_SUCCESS' });
+			localStorage.removeItem('cartItems');
+			navigate(`/order/${data.order._id}`);
+		} catch (err) {
+			dispatch({ type: 'CREATE_FAIL' });
+			toast.error(getError(err));
+		}
+	};
 
 	useEffect(() => {
 		if (!cart.paymentMethod) {
@@ -145,6 +195,12 @@ export default function PlaceOrderScreen() {
 									Place Order
 								</button>
 							</div>
+							{loading && (
+								<div>
+									{' '}
+									<h4>Loading...</h4>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
