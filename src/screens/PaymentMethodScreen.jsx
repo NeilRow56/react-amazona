@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import CheckoutProgress from '../components/CheckoutProgress';
 import { Store } from '../Store';
+import Header from '../components/Header';
 
 export default function PaymentMethodScreen() {
 	const navigate = useNavigate();
@@ -31,7 +32,8 @@ export default function PaymentMethodScreen() {
 	};
 	return (
 		<>
-			<div className="flex flex-col   w-full h-screen mx-auto ">
+			<Header />
+			<div className="flex flex-col pt-10   w-full h-screen mx-auto ">
 				<CheckoutProgress step1 step2 step3 />
 				<div className=" flex flex-col w-full max-w-[600px] min-w-[300px] mx-auto my-3 ">
 					<Helmet>

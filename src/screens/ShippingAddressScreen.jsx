@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
 import CheckoutProgress from '../components/CheckoutProgress';
+import Header from '../components/Header';
 
 export default function ShippingAddressScreen() {
 	const navigate = useNavigate();
@@ -49,7 +50,8 @@ export default function ShippingAddressScreen() {
 	};
 	return (
 		<>
-			<div className="flex flex-col   w-full h-screen mx-auto ">
+			<Header />
+			<div className="flex flex-col pt-10  w-full h-screen mx-auto ">
 				<CheckoutProgress step1 step2 />
 				<div className=" flex flex-col w-full max-w-[600px] min-w-[300px] mx-auto my-3 ">
 					<Helmet>
@@ -98,7 +100,7 @@ export default function ShippingAddressScreen() {
 							type="submit"
 							className="bg-[#f0c14b] rounded-md my-3  mx-auto py-1 px-2 border border-[#a88734]"
 						>
-							Submit
+							Continue
 						</button>
 					</form>
 				</div>
